@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: oven-sh/setup-bun@v2
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+      - name: Validate the marketplace and every plugin
+        run: |
+          claude plugin validate . --strict
+          for p in plugins/*/; do claude plugin validate "$p" --strict; done
+      - name: Test the hooks
+        run: bash plugins/workflow/hooks/tests/run.sh

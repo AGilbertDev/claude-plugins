@@ -1,6 +1,16 @@
 {
-  "description": "Gates that must never be skipped, plus the always-on core. The identity guard blocks a git commit or push made under a git user.name other than the personal one. The session-start hook prints core.md into context so every project with this plugin enabled carries the core conventions.",
+  "description": "Gates that must never be skipped, plus the always-on core. The identity guard blocks a commit or push under a git user.name other than the personal one. The secrets guard blocks any command or edit that touches a secrets file. The test gate runs the project's test script before every git commit and blocks on failure. The session-start hook prints core.md into context.",
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/core.md\""
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
@@ -8,16 +18,24 @@
           {
             "type": "command",
             "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/git-identity-guard.sh\""
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/secrets-guard.sh\""
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/tests-before-commit.sh\"",
+            "timeout": 600
           }
         ]
-      }
-    ],
-    "SessionStart": [
+      },
       {
+        "matcher": "Edit|Write|MultiEdit",
         "hooks": [
           {
             "type": "command",
-            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/core.md\""
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/secrets-guard.sh\""
           }
         ]
       }
