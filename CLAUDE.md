@@ -4,9 +4,9 @@ These are my always-on personal conventions. They are true in my personal projec
 
 ## Capturing new rules — mandatory
 
-Every rule I give you is a standing convention, not a one-off for the current task. When I state a new rule, capture it in the shared recipes before acting on it. Core conventions go in this file in `agilbertdev-recipes`. Stack rules go in the relevant skill. Agent behaviour goes in the matching agent in `ai-agents`. Push the change, then update the `.recipes` submodule pointer in the current project so the rule loads back in. This rule is itself a convention, so it lives here.
+Every rule I give you is a standing convention, not a one-off for the current task. When I state a new rule, capture it in the shared recipes before acting on it. Core conventions go in this file in `agilbertdev-recipes`. Stack rules go in the relevant skill. Agent behaviour goes in the matching file under `agents/` in the same repo. Push the change, then update the `.recipes` submodule pointer in the current project so the rule loads back in. This rule is itself a convention, so it lives here.
 
-**Push a recipes change straight to `main` and bump the pointer in the same breath. Do not open a pull request and do not wait for me.** This is a deliberate exception to the rule below that the default branch is mine to merge, and it applies to `agilbertdev-recipes` and `ai-agents` only, never to a project repo. The reason is that a convention I have just stated is not in force until the pointer moves, so a pull request sitting unmerged means the rule is captured on paper and absent from the session that needed it. There is nothing to review either, since the content is my own instruction written down. Commit it, push it to `main`, bump the submodule pointer in the project, and tell me it is done.
+**Push a recipes change straight to `main` and bump the pointer in the same breath. Do not open a pull request and do not wait for me.** This is a deliberate exception to the rule below that the default branch is mine to merge, and it applies to `agilbertdev-recipes` only, never to a project repo. The reason is that a convention I have just stated is not in force until the pointer moves, so a pull request sitting unmerged means the rule is captured on paper and absent from the session that needed it. There is nothing to review either, since the content is my own instruction written down. Commit it, push it to `main`, bump the submodule pointer in the project, and tell me it is done.
 
 **Never use `git stash`.** Not to park a change, not to peek at another state, not to keep a tree clean while running a check. It has cost me work once already. Two reasons it is worse than it looks. It ignores submodule pointer changes, so a stash of a submodule-only change saves nothing and reports success, and a later `pop` then reaches back to some unrelated stash from a previous session and drops conflicts across the tree. If a check genuinely needs a different state, use a temporary copy of the file, `git show <ref>:<path>` piped to a scratch path, or a throwaway clone, and leave the working tree exactly where it is.
 
@@ -198,7 +198,7 @@ Do not write implementation code directly. Every feature, page, route, bug fix, 
 
 Stages that do not apply to a given feature are skipped. Specs and code review are never skipped.
 
-The specialist agents live in `.claude/agents/agilbertdev/`, symlinked from the shared `ai-agents` repo. They are plain markdown files — the instructions work regardless of which AI tool is running them. A project may add its own agent as a real `.md` file at the top level of `.claude/agents/` to override or extend the shared set.
+The specialist agents live in `.claude/agents/agilbertdev/`, symlinked from the `agents/` folder of the shared recipes repo. They are plain markdown files — the instructions work regardless of which AI tool is running them. A project may add its own agent as a real `.md` file at the top level of `.claude/agents/` to override or extend the shared set.
 
 ## On-demand skills
 

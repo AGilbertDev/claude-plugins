@@ -19,18 +19,13 @@ if [ "$RECIPE_DIR" = "$PROJECT" ]; then
   exit 1
 fi
 
-echo "==> Pulling latest ai-agents"
-# Always fetch the newest agents — no pointer bumping needed across projects.
-# Per-project symlinks keep personal agents out of work contexts.
-(cd "$RECIPE_DIR" && git submodule update --init --remote agents 2>/dev/null) || true
-
 mkdir -p "$PROJECT/.claude/agents"
 mkdir -p "$PROJECT/.claude/skills"
 
 echo "==> Linking the agilbertdev agent set"
 # One symlink for the whole shared set, not one per file. Claude Code scans
 # .claude/agents/ recursively, so the subfolder is discovered. New agents in
-# the ai-agents repo show up on the next pull with no install re-run.
+# the recipe repo show up on the next pointer bump with no install re-run.
 #
 # This install only ever touches symlinks that point into .recipes. It never
 # deletes or overwrites a real file or folder. So a project-specific agent kept
@@ -48,8 +43,8 @@ done
 if [ -e "$PROJECT/.claude/agents/agilbertdev" ] && [ ! -L "$PROJECT/.claude/agents/agilbertdev" ]; then
   echo "    agilbertdev is a real folder here (diverged) — left untouched"
 else
-  ln -sfn "../../.recipes/agents/agents" "$PROJECT/.claude/agents/agilbertdev"
-  echo "    linked agilbertdev -> .recipes/agents/agents"
+  ln -sfn "../../.recipes/agents" "$PROJECT/.claude/agents/agilbertdev"
+  echo "    linked agilbertdev -> .recipes/agents"
 fi
 
 echo "==> Linking local instruction skills from the recipe"

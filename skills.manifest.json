@@ -1,8 +1,7 @@
 {
   "agent": "claude-code",
-  "description": "AGilbertDev recipe: a small SDK of agent instructions. Specialist subagents come from the ai-agents submodule. Local instruction skills ship in this repo; third-party skills are downloaded from their upstream sources at install time.",
-  "agents_submodule": "https://github.com/AGilbertDev/ai-agents",
-  "agents_path": "agents/agents",
+  "description": "AGilbertDev recipe: a small SDK of agent instructions. Specialist subagents ship in this repo under agents/. Local instruction skills ship in this repo; third-party skills are downloaded from their upstream sources at install time.",
+  "agents_path": "agents",
   "local": [
     "my-frontend-conventions",
     "my-backend-conventions",
