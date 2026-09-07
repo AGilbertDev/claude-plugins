@@ -1,5 +1,5 @@
 ---
-name: my-compliance-conventions
+name: compliance
 description: AGilbertDev's universal privacy, security, and minimum-legal baseline for every project — Québec Law 25 + Charter of the French Language (Law 101/96), PIPEDA, GDPR/UK GDPR, US state laws, COPPA, CASL/CAN-SPAM, consumer protection, accessibility (WCAG/EAA), IP & asset licensing, and digital-sales tax. Security baseline — secrets, encryption, auth, dependency & input hygiene. Use when building anything that collects data, sends email, sells to consumers, uses third-party IP/assets, or needs legal pages/consent. REQUIRED baselines. Store-specific rules (Google Play, App Store) are PROJECT-level — see the project's PLAYSTORE.md, not this skill.
 ---
 

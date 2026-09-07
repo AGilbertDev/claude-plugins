@@ -13,18 +13,5 @@
       "Bash(head *.env*)",
       "Bash(tail *.env*)"
     ]
-  },
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/.recipes/plugins/workflow/hooks/git-identity-guard.sh\""
-          }
-        ]
-      }
-    ]
   }
 }

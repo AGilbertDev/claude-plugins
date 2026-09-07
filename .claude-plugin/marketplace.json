@@ -1,0 +1,25 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "agilbertdev",
+  "description": "AGilbertDev's Claude Code plugins. The spec-driven feature pipeline, and one conventions plugin per stack.",
+  "owner": {
+    "name": "AGilbertDev",
+    "url": "https://github.com/AGilbertDev"
+  },
+  "plugins": [
+    {
+      "name": "workflow",
+      "description": "The spec-driven feature pipeline, with the pipeline skill, the stage agents, the commit gates as hooks, and the always-on personal conventions. Stack-agnostic.",
+      "source": "./plugins/workflow",
+      "category": "development",
+      "homepage": "https://github.com/AGilbertDev/claude-plugins/tree/main/plugins/workflow"
+    },
+    {
+      "name": "nuxt-conventions",
+      "description": "Frontend, backend, and styling conventions for the Nuxt 4 stack, meaning Nuxt UI 4, Tailwind 4, Turso with Drizzle, Zod, nuxt-auth-utils, and Resend.",
+      "source": "./plugins/nuxt-conventions",
+      "category": "development",
+      "homepage": "https://github.com/AGilbertDev/claude-plugins/tree/main/plugins/nuxt-conventions"
+    }
+  ]
+}

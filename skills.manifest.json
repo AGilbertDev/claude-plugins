@@ -1,12 +1,12 @@
 {
   "agent": "claude-code",
   "description": "AGilbertDev recipe: a small SDK of agent instructions. Specialist subagents ship in this repo under agents/. Local instruction skills ship in this repo; third-party skills are downloaded from their upstream sources at install time.",
-  "agents_path": "agents",
+  "agents_path": "plugins/*/agents",
   "local": [
-    "my-frontend-conventions",
-    "my-backend-conventions",
-    "my-styling-conventions",
-    "my-compliance-conventions",
+    "nuxt-conventions/skills/frontend",
+    "nuxt-conventions/skills/backend",
+    "nuxt-conventions/skills/styling",
+    "workflow/skills/compliance",
     "new-project",
     "tutorial-mode"
   ],

@@ -37,14 +37,16 @@ echo "==> Linking the agilbertdev agent set"
 # earlier installs and the agilbertdev link itself), then relink.
 find "$PROJECT/.claude/agents" -maxdepth 1 -type l 2>/dev/null | while read -r link; do
   case "$(readlink "$link")" in
-    *.recipes/agents/*) rm -f "$link" ;;
+    *.recipes/agents/* | *.recipes/plugins/*/agents/*) rm -f "$link" ;;
   esac
 done
 if [ -e "$PROJECT/.claude/agents/agilbertdev" ] && [ ! -L "$PROJECT/.claude/agents/agilbertdev" ]; then
   echo "    agilbertdev is a real folder here (diverged) — left untouched"
 else
-  ln -sfn "../../.recipes/agents" "$PROJECT/.claude/agents/agilbertdev"
-  echo "    linked agilbertdev -> .recipes/agents"
+  ln -sfn "../../.recipes/plugins/workflow/agents" "$PROJECT/.claude/agents/agilbertdev"
+  ln -sfn "../../.recipes/plugins/nuxt-conventions/agents" "$PROJECT/.claude/agents/agilbertdev-nuxt"
+  echo "    linked agilbertdev -> .recipes/plugins/workflow/agents"
+  echo "    linked agilbertdev-nuxt -> .recipes/plugins/nuxt-conventions/agents"
 fi
 
 echo "==> Linking local instruction skills from the recipe"
@@ -56,15 +58,16 @@ echo "==> Linking local instruction skills from the recipe"
 # linger as dead links.
 find "$PROJECT/.claude/skills" -maxdepth 1 -type l 2>/dev/null | while read -r link; do
   case "$(readlink "$link")" in
-    *.recipes/skills/*) rm -f "$link" ;;
+    *.recipes/skills/* | *.recipes/plugins/*/skills/*) rm -f "$link" ;;
   esac
 done
-for dir in "$RECIPE_DIR"/skills/*/; do
+for dir in "$RECIPE_DIR"/plugins/*/skills/*/; do
   name="$(basename "$dir")"
   if [ -e "$PROJECT/.claude/skills/$name" ] && [ ! -L "$PROJECT/.claude/skills/$name" ]; then
     echo "    $name is a real folder here (diverged) — left untouched"
   else
-    ln -sfn "../../.recipes/skills/$name" "$PROJECT/.claude/skills/$name"
+    rel="${dir#"$RECIPE_DIR"/}"
+    ln -sfn "../../.recipes/${rel%/}" "$PROJECT/.claude/skills/$name"
     echo "    linked $name"
   fi
 done

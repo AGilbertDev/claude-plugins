@@ -1,6 +1,6 @@
 ---
-name: my-frontend-conventions
-description: AGilbertDev's frontend conventions for Nuxt/Vue projects — component and composable choices, solution priority, icons, and page performance. Use when building UI, components, or pages in a personal Nuxt project, or when a page is slow and you need to find what is actually costing the time. Pairs with my-styling-conventions for Tailwind and theming.
+name: frontend
+description: AGilbertDev's frontend conventions for Nuxt/Vue projects — component and composable choices, solution priority, icons, and page performance. Use when building UI, components, or pages in a personal Nuxt project, or when a page is slow and you need to find what is actually costing the time. Pairs with nuxt-conventions:styling for Tailwind and theming.
 ---
 
 # Frontend conventions (Nuxt / Vue)
@@ -25,7 +25,7 @@ Look up the official docs and explain the reasoning rather than guessing. When n
 
 A form that creates a row carrying a user-supplied name collects that name in **every supported locale at once**, so the screen shows a French field and an English field side by side rather than one field and a promise to translate later. French leads, since the app is French first.
 
-The names go to the `translations` table described in `my-backend-conventions`, never into the locale JSON files. Interface copy is i18n and ships with the app. A name the user invents at runtime is data and lives in the database. Do not let a component read one from the other.
+The names go to the `translations` table described in `nuxt-conventions:backend`, never into the locale JSON files. Interface copy is i18n and ships with the app. A name the user invents at runtime is data and lives in the database. Do not let a component read one from the other.
 
 ## Data mutations and cache invalidation
 

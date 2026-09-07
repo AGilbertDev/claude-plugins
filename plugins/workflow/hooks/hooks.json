@@ -1,0 +1,16 @@
+{
+  "description": "Gates that must never be skipped. The identity guard blocks a git commit or push made under a git user.name other than the personal one.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/git-identity-guard.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}

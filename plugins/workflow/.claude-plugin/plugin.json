@@ -1,0 +1,18 @@
+{
+  "name": "workflow",
+  "version": "0.1.0",
+  "description": "The spec-driven feature pipeline, with the pipeline skill, the stage agents, the commit gates as hooks, and the always-on personal conventions. Stack-agnostic.",
+  "author": {
+    "name": "AGilbertDev",
+    "url": "https://github.com/AGilbertDev"
+  },
+  "homepage": "https://github.com/AGilbertDev/claude-plugins/tree/main/plugins/workflow",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": [
+    "pipeline",
+    "spec-driven",
+    "subagents",
+    "hooks",
+    "conventions"
+  ]
+}

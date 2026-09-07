@@ -1,0 +1,19 @@
+{
+  "name": "nuxt-conventions",
+  "version": "0.1.0",
+  "description": "Frontend, backend, and styling conventions for the Nuxt 4 stack, meaning Nuxt UI 4, Tailwind 4, Turso with Drizzle, Zod, nuxt-auth-utils, and Resend.",
+  "author": {
+    "name": "AGilbertDev",
+    "url": "https://github.com/AGilbertDev"
+  },
+  "homepage": "https://github.com/AGilbertDev/claude-plugins/tree/main/plugins/nuxt-conventions",
+  "license": "SEE LICENSE IN LICENSE",
+  "keywords": [
+    "nuxt",
+    "vue",
+    "nuxt-ui",
+    "tailwind",
+    "drizzle",
+    "conventions"
+  ]
+}

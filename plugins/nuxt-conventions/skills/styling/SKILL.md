@@ -1,11 +1,11 @@
 ---
-name: my-styling-conventions
-description: AGilbertDev's styling conventions and visual identity for Nuxt/Tailwind projects — semantic-token theming, Hanken Grotesk type, fluid clamp() sizing, dark mode, and accessible Nuxt UI components. Use when styling components or pages, building responsive layouts, matching the brand, or setting up a theme. Pairs with my-frontend-conventions.
+name: styling
+description: AGilbertDev's styling conventions and visual identity for Nuxt/Tailwind projects — semantic-token theming, Hanken Grotesk type, fluid clamp() sizing, dark mode, and accessible Nuxt UI components. Use when styling components or pages, building responsive layouts, matching the brand, or setting up a theme. Pairs with nuxt-conventions:frontend.
 ---
 
 # Styling conventions (Tailwind / Nuxt UI)
 
-The visual identity shared across AGilbertDev's Nuxt projects (portfolio, time-tracking, resume). Starting defaults, adjust per project. Pairs with my-frontend-conventions for component choices and icons.
+The visual identity shared across AGilbertDev's Nuxt projects (portfolio, time-tracking, resume). Starting defaults, adjust per project. Pairs with nuxt-conventions:frontend for component choices and icons.
 
 ## Stack & foundation
 
