@@ -1,5 +1,5 @@
 {
-  "description": "Gates that must never be skipped. The identity guard blocks a git commit or push made under a git user.name other than the personal one.",
+  "description": "Gates that must never be skipped, plus the always-on core. The identity guard blocks a git commit or push made under a git user.name other than the personal one. The session-start hook prints core.md into context so every project with this plugin enabled carries the core conventions.",
   "hooks": {
     "PreToolUse": [
       {
@@ -8,6 +8,16 @@
           {
             "type": "command",
             "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/git-identity-guard.sh\""
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"${CLAUDE_PLUGIN_ROOT}/core.md\""
           }
         ]
       }
