@@ -71,6 +71,7 @@ The visual identity shared across AGilbertDev's Nuxt projects (portfolio, time-t
 - Skip-to-content link: `sr-only focus:not-sr-only`, targeting a `tabindex="-1"` `UMain#main-content`.
 - Focus ring on every interactive element: `focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary`.
 - `aria-label` on every icon-only button and link.
+- Semantic HTML for every interactive element. `<button>`, `<nav>`, `<main>`, `<article>`. Never a `<div>` as a control.
 - Lean on semantic tokens so contrast holds in both light and dark.
 
 ## Motion
@@ -82,3 +83,10 @@ The visual identity shared across AGilbertDev's Nuxt projects (portfolio, time-t
 - A slow spinning gradient border is the signature accent. Implement it once as a `.btn-glow` utility in `main.css`: an absolutely-positioned `::before` with `border-radius: inherit`, a `conic-gradient` masked into a thin ring (`mask` + `mask-composite: exclude`), an animatable `--btn-angle` through CSS `@property` spinning slowly (about 7s), and a soft `box-shadow` glow. Reveal it on `:hover`; a `.glow-on` modifier keeps it lit permanently (used around the portrait). Gate the spin behind `prefers-reduced-motion`. Put the ring `::before` above the content (`z-index: 1`) so it shows over media that reaches the edge.
 - Keep the ring on-brand and legible on any button color: sweep between the brand colors (teal and a hue-shifted cyan) with a lighter glint, all derived from the primary via oklch relative color so nothing hardcodes a second hue.
 - A faint page-level glow (a large, low-opacity radial of the primary, hue-shifted) anchored top-right and bled down through the first sections adds depth. Keep it fainter on the dark canvas so it never muddies the navy.
+
+## The design section of a spec
+
+- Nuxt UI primitives first, then custom Tailwind layout. Name components exactly, like `UPageSection` holding a `UCard` with `rounded-2xl bg-default ring ring-default`.
+- Semantic tokens and `clamp()` sizing for every decision listed. Reach for `.btn-glow` on primary calls to action, cards, and round media.
+- Prose and class lists only. No `<template>`, no `<script setup>`.
+- Never reference a Figma asset URL. Note that assets are downloaded to `public/images/` before use.

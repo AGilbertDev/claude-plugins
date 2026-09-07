@@ -1,40 +1,70 @@
 ---
 name: spec
-description: How to write a feature spec and the design principles every spec must check. Use at the spec stage of the pipeline, or when the user asks for a spec, a data model decision, or a feature design review.
+description: How to write and maintain a feature spec, with the template and the design principles every spec must check. Use at the spec stage of the pipeline, when the user asks for a spec, or when a feature changes and its spec must follow.
 ---
 
 # Writing a spec
 
-This skill is rewritten in the next step of the rebuild. For now it holds the design principles that used to sit in the always-on core. Check every one of them while writing a spec.
+A spec is the contract for one feature. It is short, current, and testable. The pipeline writes it in plan mode with the user and commits it before any code exists. The unit-test agent derives its tests from it, so every acceptance criterion must be something a test can check.
 
-## Look up the industry first
+## Rules
 
-Somebody has built something close to whatever I am building. Research the existing products in the domain, read how they model the problem, and say where our shape agrees or differs. Name the products and be specific about mechanism. Report honestly when the research says we got it wrong, and just as honestly when it says we got it right. When our shape differs, say whether the difference is a deliberate advantage or an accident, and what changing course would cost. This comes before the shape is chosen, not after.
+- One spec per feature, kept current. When the feature changes, edit its spec. Never add a second spec for the same feature. Git history holds how it changed.
+- Path is `docs/specs/<domain>/<feature>.md`. Kebab-case, grouped by app area the way pages and components are, never a flat folder.
+- Under 150 lines. Longer means two features.
+- Acceptance criteria are numbered `AC1`, `AC2`, and so on. Each one is observable.
+- Enumerate abandoned and interrupted paths, not just the happy path. Any flow spanning more than one step, request, token, or session says what happens when it stops halfway and how the user recovers.
+- Ask open questions one at a time. Never assume scope.
+- No implementation code in a spec.
 
-## Any list is customizable, modular, and extensible
+## Template
 
-Never hardcode a set the user might want to change. Categories, statuses, tags, types, kinds, labels, and priorities are user-owned data, not constants in a file. Assume the set will grow, that a member will be renamed, that one will be retired without deleting the rows that reference it, and that the user will add their own on top of the defaults.
+```md
+# <Feature name>
 
-In practice. Ship the defaults as data the user owns rather than as a union type. Key related settings by the member's id so a member that does not exist yet is already accepted. Keep display names in the i18n layer keyed by id, never in the stored value. Give a member its own declared flags rather than letting code special-case one id. Guarantee by construction anything a new member needs, such as a readable colour or a stable sort position.
+## Intent
+One paragraph. What it does and why it exists.
 
-This is not permission to build a full editor before the feature that needs one. The data model accepts growth. The management screen can be its own feature.
+## Prior art
+Which existing products solve this, and by what mechanism. Where our shape agrees or differs, and why.
 
-## Logic belongs to the backend
+## Inputs
+Query params, body fields, settings, or user actions.
 
-The frontend is a view with as little brain as possible. It draws what it is handed. When a value is derived rather than stored, the server derives it and sends the finished answer. A status that depends on the current time, a total, a permission, an ordering, a filter, a page of results, a label chosen between several. All of these arrive resolved. A derived field with no column behind it is a legitimate part of a response.
+## Outputs and acceptance criteria
+AC1. ...
+AC2. ...
 
-The one exception is presentation. Focus, open and closed state, hover and transition, a purely visual breakpoint choice, and formatting for display from data already resolved stay in the component. If the rule would still be true with no user interface attached, it belongs to the backend. When both sides genuinely need the same pure rule, it lives once in the shared contract layer and both import it. Copying it is not sharing.
+## Design
+Only when the feature has UI. See below.
 
-## No invalid states and safe recovery
+## Edge cases and interrupted paths
+What happens at each failure and each half-finished state, and how the user recovers.
 
-Never leave the system in a state a user or process cannot get out of. Assume any process can be abandoned partway, any token or session can expire, and any step can be interrupted. Design so the outcome is either fully done or safely recoverable. For every flow that spans more than one step or one request, write down what happens when it stops halfway, and give the affected user a way to restart that does not depend on state they no longer hold. A dead end is a bug.
+## Out of scope
+What this feature deliberately does not do, and where that work goes.
 
-Recovery must be safe. It can never become an authentication or authorization bypass, must not reveal whether an account exists, and must not let one user act on another's data. Prefer the framework's documented recovery pattern. When in doubt, fail closed and route the user back to a clean start.
+## Verification
+The exact commands and manual checks that prove each AC. This becomes the pull request's test plan.
 
-## Measure before you change it
+## Open questions
+Decisions still needed. Blank when none.
+```
 
-When something is slow or heavy, measure first and let the number pick the target. Measure the baseline a visitor actually gets, which on a low-traffic site is a cold function. A warm-to-warm comparison hides whole seconds. If the number says the suspected thing is not the bottleneck, say so and name what is, before building anything.
+## The design section
 
-## A costly default loses to the visitor
+Prose and class lists, never markup. Layout regions and their purpose. Component hierarchy using the stack's primitives first. Token and sizing decisions. Responsive behaviour. Motion, gated behind reduced motion. Follow the stack plugin's styling skill for the specifics.
 
-A default a tool ships with is not the same as its convention. When a documented default makes the site materially worse for a visitor, look for another supported configuration that gives up a feature I can afford, before swallowing the cost or building something bespoke. Give me the price in numbers. A feature is affordable when the visitor has an obvious manual path to the same place.
+## Principles every spec must check
+
+**Look up the industry first.** Somebody has built something close to this. Research the existing products, read how they model the problem, and say where our shape agrees or differs. Name the products and be specific about mechanism. Report honestly when the research says we got it wrong. When our shape differs, say whether the difference is deliberate or accidental, and what changing course would cost. This comes before the shape is chosen.
+
+**Any list is customizable, modular, and extensible.** Categories, statuses, tags, types, labels, and priorities are user-owned data, not constants. Assume the set will grow, that a member will be renamed, that one will be retired without deleting the rows that reference it. Ship defaults as data. Key related settings by member id. Keep display names in the i18n layer keyed by id. Give members declared flags rather than special-casing an id in code. Guarantee by construction anything a new member needs, such as a readable colour or a stable sort position. This is not permission to build the management screen before the feature that needs it.
+
+**Logic belongs to the backend.** The frontend is a view with as little brain as possible. Derived values arrive resolved. A status that depends on the current time, a total, a permission, an ordering, a filter, a page of results, a label chosen between several. A derived field with no column behind it is a legitimate part of a response. Only presentation stays in the component. Focus, open and closed state, hover, transitions, a visual breakpoint, and display formatting of resolved data. If the rule would still be true with no user interface attached, it belongs to the backend. A pure rule both sides need lives once in the shared contract layer.
+
+**No invalid states and safe recovery.** Assume any process can be abandoned partway and any token can expire. The outcome is either fully done or safely recoverable. Recovery never becomes an auth bypass, never reveals whether an account exists, and never lets one user act on another's data. Prefer the framework's documented recovery pattern. When in doubt, fail closed and route the user back to a clean start.
+
+**Measure before you change it.** When something is slow or heavy, measure first and let the number pick the target. Measure the cold baseline a visitor actually gets. If the number says the suspected thing is not the bottleneck, say so and name what is.
+
+**A costly default loses to the visitor.** A default a tool ships with is not its convention. When a documented default makes the site materially worse for a visitor, look for another supported configuration that gives up a feature I can afford. Give me the price in numbers. A feature is affordable when the visitor has an obvious manual path to the same place.

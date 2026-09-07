@@ -2,14 +2,7 @@
   "agent": "claude-code",
   "description": "AGilbertDev recipe: a small SDK of agent instructions. Specialist subagents ship in this repo under agents/. Local instruction skills ship in this repo; third-party skills are downloaded from their upstream sources at install time.",
   "agents_path": "plugins/*/agents",
-  "local": [
-    "nuxt-conventions/skills/frontend",
-    "nuxt-conventions/skills/backend",
-    "nuxt-conventions/skills/styling",
-    "workflow/skills/compliance",
-    "new-project",
-    "tutorial-mode"
-  ],
+  "local": "plugins/*/skills/*",
   "download": [
     {
       "skill": "nuxt-ui",
@@ -19,20 +12,60 @@
       "method": "git-sparse",
       "note": "official Nuxt UI team skill (lives in a subdir)"
     },
-    { "skill": "vue", "source": "antfu/skills", "method": "skills-cli" },
-    { "skill": "vue-best-practices", "source": "antfu/skills", "method": "skills-cli" },
-    { "skill": "nuxt", "source": "antfu/skills", "method": "skills-cli" },
-    { "skill": "zod", "source": "pproenca/dot-skills", "method": "skills-cli" },
-    { "skill": "bun", "source": "midudev/autoskills", "method": "skills-cli" },
+    {
+      "skill": "vue",
+      "source": "antfu/skills",
+      "method": "skills-cli"
+    },
+    {
+      "skill": "vue-best-practices",
+      "source": "antfu/skills",
+      "method": "skills-cli"
+    },
+    {
+      "skill": "nuxt",
+      "source": "antfu/skills",
+      "method": "skills-cli"
+    },
+    {
+      "skill": "zod",
+      "source": "pproenca/dot-skills",
+      "method": "skills-cli"
+    },
+    {
+      "skill": "bun",
+      "source": "midudev/autoskills",
+      "method": "skills-cli"
+    },
     {
       "skill": "tailwind-css-patterns",
       "source": "giuseppe-trisciuoglio/developer-kit",
       "method": "skills-cli"
     },
-    { "skill": "typescript-advanced-types", "source": "wshobson/agents", "method": "skills-cli" },
-    { "skill": "accessibility", "source": "addyosmani/web-quality-skills", "method": "skills-cli" },
-    { "skill": "seo", "source": "addyosmani/web-quality-skills", "method": "skills-cli" },
-    { "skill": "frontend-design", "source": "anthropics/skills", "method": "skills-cli" },
-    { "skill": "vue-debug-guides", "source": "hyf0/vue-skills", "method": "skills-cli" }
+    {
+      "skill": "typescript-advanced-types",
+      "source": "wshobson/agents",
+      "method": "skills-cli"
+    },
+    {
+      "skill": "accessibility",
+      "source": "addyosmani/web-quality-skills",
+      "method": "skills-cli"
+    },
+    {
+      "skill": "seo",
+      "source": "addyosmani/web-quality-skills",
+      "method": "skills-cli"
+    },
+    {
+      "skill": "frontend-design",
+      "source": "anthropics/skills",
+      "method": "skills-cli"
+    },
+    {
+      "skill": "vue-debug-guides",
+      "source": "hyf0/vue-skills",
+      "method": "skills-cli"
+    }
   ]
 }

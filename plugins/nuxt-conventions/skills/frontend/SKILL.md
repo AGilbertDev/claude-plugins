@@ -81,3 +81,21 @@ It does not combine with browser-language detection. A prerendered page gets no 
 ## Scroll reveal
 
 - Reveal sections on scroll with a small client plugin: add a `js` class to `<html>`, hide `[data-reveal]` elements only when that class is present (so a no-JS render still shows everything), then add an `is-in` class through an `IntersectionObserver` on mount and after each navigation. Stagger children with a `--reveal-i` custom property. Gate the whole effect behind `prefers-reduced-motion`.
+
+## Pages
+
+- `useSeoMeta()` on every page component, with `title` and `description` at minimum. The `seo-checklist` skill has the full list for public pages.
+- Keep components small. A second `<script setup>` concern means a split.
+
+## i18n
+
+- `useI18n()` for every user-facing string. Never hardcode copy in a template.
+- Add the `fr` and `en` keys at the same time, in the matching locale files.
+
+## Boundaries
+
+- Never write server route or database code in a `.vue` file.
+- Be a view with as little brain as possible. Draw what the server hands you. A derived value arrives resolved. When the response lacks the data you need, the fix is a backend change, not a computation here.
+- Only presentation logic belongs in a component. Focus, open and closed state, hover and transition, a visual breakpoint, and display formatting of resolved data.
+- Never let a component be the only thing enforcing a rule. Mirror it on the server.
+- When both sides need the same pure rule, import it from `shared/`. Never copy it.

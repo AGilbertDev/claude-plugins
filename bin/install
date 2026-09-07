@@ -44,9 +44,7 @@ if [ -e "$PROJECT/.claude/agents/agilbertdev" ] && [ ! -L "$PROJECT/.claude/agen
   echo "    agilbertdev is a real folder here (diverged) — left untouched"
 else
   ln -sfn "../../.recipes/plugins/workflow/agents" "$PROJECT/.claude/agents/agilbertdev"
-  ln -sfn "../../.recipes/plugins/nuxt-conventions/agents" "$PROJECT/.claude/agents/agilbertdev-nuxt"
   echo "    linked agilbertdev -> .recipes/plugins/workflow/agents"
-  echo "    linked agilbertdev-nuxt -> .recipes/plugins/nuxt-conventions/agents"
 fi
 
 echo "==> Linking local instruction skills from the recipe"

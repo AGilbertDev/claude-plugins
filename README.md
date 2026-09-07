@@ -15,10 +15,10 @@ My Claude Code plugins. A marketplace named `agilbertdev` that holds one plugin 
 
 ## Plugins
 
-| Plugin             | What it holds                                                                                                                                                                                                              |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `workflow`         | The spec-driven feature pipeline. The pipeline skill, the stage agents, the commit gates as hooks, the `.env` deny rules, and the always-on personal conventions. Nothing in it is tied to a stack, so it survives a stack change. |
-| `nuxt-conventions` | The Nuxt 4 stack conventions as skills, meaning frontend, backend, and styling. A React or .NET counterpart can sit beside it, and a project enables only the one it uses.                                                    |
+| Plugin             | What it holds                                                                                                                                                                                                                                   |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `workflow`         | The spec-driven feature pipeline. Skills `pipeline`, `spec`, `commit`, `compliance`, `quebec-french`, `new-project`, and `tutorial-mode`. One agent, `unit-test`, which writes tests from the spec before the code exists. Hooks for the git identity and the always-on core. The `.env` deny rules. Nothing in it is tied to a stack. |
+| `nuxt-conventions` | The Nuxt 4 stack. Skills `frontend`, `backend`, and `styling` carry the rules. Skills `review-checklist`, `a11y-checklist`, and `seo-checklist` carry the audits. A React or .NET counterpart can sit beside it, and a project enables only the one it uses. |
 
 A plugin is installed into a project and updated centrally, which is what makes it different from a project template. The starter files for a new project live in a separate template repository, one per stack, with the plugins already enabled in its Claude settings.
 

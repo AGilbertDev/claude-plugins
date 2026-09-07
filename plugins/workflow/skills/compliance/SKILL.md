@@ -97,3 +97,7 @@ Law 96 strengthened it.)
 - An "Open source licenses" screen; original (non-infringing) game rules.
 - A short per-project **`COMPLIANCE.md`** tracking: privacy officer, processors + locations, PIA status,
   asset licenses, tax/registration status. Verify with counsel before commercial launch.
+
+## Review output
+
+Report gaps in three tiers. CRITICAL blocks shipping. WARNING is addressed soon. SUGGESTION is hygiene. Never call a feature compliant while a CRITICAL gap is open. A missing French legal page is CRITICAL. Plain-text password storage is CRITICAL in every context. Marketing email needs a consent timestamp recorded per subscriber. For the accessibility audit, use the stack plugin's a11y checklist rather than repeating it here.

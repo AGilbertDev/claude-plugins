@@ -56,6 +56,11 @@ Every migration must be safe to re-run and must complete even after a partial fa
 
 ## Server routes
 
+- `defineEventHandler` with `readValidatedBody` or `getValidatedQuery` and the Zod schema, so the input is validated before anything else runs.
+- Upserts are idempotent, keyed on a stable id or hash.
+- `useRuntimeConfig()` for every secret and environment value. Never `process.env` in a handler. The Turso token is server-side only and never reaches a composable or the client bundle.
+- `createError({ statusCode, message })` for expected failures. Let Nitro handle the unexpected ones. Never swallow an exception.
+
 - Nitro server routes under `server/`. Keep handlers thin: validate, call a small typed function, return. Push reusable logic into `server/utils`.
 
 ## List endpoints
@@ -78,3 +83,13 @@ List endpoints paginate, sort, and search on the server, never on the client. Th
 ## Tooling
 
 - Bun for scripts and seeding.
+
+## Ownership of logic
+
+- Own every decision the client would otherwise make. A derived value is resolved before it is sent, so the response carries the finished answer rather than a raw row plus the rules for reading it. A derived field with no column behind it is legitimate. Document it as derived on the response type.
+- Push the decision into the query when the data layer can make it, with a `CASE` expression or a computed column, rather than looping over rows in application code. Pass what the comparison needs, such as the current instant in the user's timezone, as a bound parameter.
+- A rule enforced only in a component is not enforced. When both sides need the same pure rule, it lives once in `shared/` and both import it.
+
+## Recovery
+
+- Never leave data or auth in a state the user cannot recover from. Writes and multi-step flows can be interrupted and tokens can expire, so each outcome is fully applied or safely restartable. Recovery fails closed. It never becomes an auth bypass, never reveals whether an account exists, and never lets one user act on another's data.
