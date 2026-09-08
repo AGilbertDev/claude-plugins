@@ -2,12 +2,12 @@
 
 My Claude Code plugins. A marketplace named `agilbertdev` that holds one plugin for how I build software with agents, and one conventions plugin per stack.
 
-> Published for viewing and reference only. It is not open source. See [License](#license).
+> My own setup, published so the method can be read. It is not open source and not a package for general use. The licence allows viewing and nothing else. See [License](#license).
 
 ## Contents
 
 - [Plugins](#plugins)
-- [Install into a project](#install-into-a-project)
+- [Adding it to one of my projects](#adding-it-to-one-of-my-projects)
 - [Update](#update)
 - [Repository layout](#repository-layout)
 - [Migration status](#migration-status)
@@ -22,7 +22,11 @@ My Claude Code plugins. A marketplace named `agilbertdev` that holds one plugin 
 
 A plugin is installed into a project and updated centrally, which is what makes it different from a project template. The starter files for a new project live in a separate template repository, one per stack, with the plugins already enabled in its Claude settings.
 
-## Install into a project
+## Adding it to one of my projects
+
+These are my own notes. The repository is public so the method can be read, and the licence allows reading and nothing else. It is not a package on offer, and none of it is written to be useful to anybody else's setup.
+
+Every project of mine already declares the marketplace and both plugins in a committed `.claude/settings.json`, so opening one is usually all it takes. **Do not accept the install prompt.** It defaults to user scope, which puts a personal workflow into every repository on the machine, including an employer's. Run the commands instead, with the scope spelled out.
 
 ```bash
 claude plugin marketplace add AGilbertDev/claude-plugins --scope project
@@ -30,9 +34,19 @@ claude plugin install workflow@agilbertdev --scope project
 claude plugin install nuxt-conventions@agilbertdev --scope project
 ```
 
-Choose **project** scope at the prompt, never user. This machine holds a personal and a work account, and a user-scope install would load a personal workflow into every repository, including an employer's. If it ends up at user scope by accident, undo it with `claude plugin uninstall workflow@agilbertdev --scope user` and remove the `agilbertdev` entries from `~/.claude/settings.json`. The identity guard also refuses to act on any repository whose origin remote is not under my own account, so a stray install cannot block a work commit.
+A project that does not declare them yet needs the same three commands plus the two entries in its own `.claude/settings.json`, which the commands write.
 
-Skills then show up namespaced by plugin, for example `/workflow:pipeline` and `/nuxt-conventions:styling`, and agents as `workflow:unit-test`. The project scope writes the enablement into `.claude/settings.json`, so it is committed and travels with the clone. Check what a plugin costs in context with `claude plugin details workflow@agilbertdev`.
+If a user-scope install happens anyway, undo it.
+
+```bash
+claude plugin uninstall workflow@agilbertdev --scope user
+claude plugin uninstall nuxt-conventions@agilbertdev --scope user
+# then delete the agilbertdev entries from ~/.claude/settings.json
+```
+
+The identity guard is written to survive that mistake. It reads the owner out of the origin remote and refuses to act unless the repository is under my own account, so a stray install cannot block a commit in somebody else's repository.
+
+Skills then show up namespaced by plugin, for example `/workflow:pipeline` and `/nuxt-conventions:styling`, and agents as `workflow:unit-test`. Project scope writes the enablement into `.claude/settings.json`, so it is committed and travels with the clone. Check what a plugin costs in context with `claude plugin details workflow@agilbertdev`.
 
 ## Update
 
