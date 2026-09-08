@@ -2,11 +2,12 @@
 
 My Claude Code plugins. A marketplace named `agilbertdev` that holds one plugin for how I build software with agents, and one conventions plugin per stack.
 
-> My own setup, published so the method can be read. It is not open source and not a package for general use. The licence allows viewing and nothing else. See [License](#license).
+> My own setup, published so the method can be read and tried. It is not open source. The licence permits running it to evaluate my work, and nothing beyond that. See [Try it](#try-it) and [License](#license).
 
 ## Contents
 
 - [Plugins](#plugins)
+- [Try it](#try-it)
 - [Adding it to one of my projects](#adding-it-to-one-of-my-projects)
 - [Update](#update)
 - [Repository layout](#repository-layout)
@@ -22,9 +23,37 @@ My Claude Code plugins. A marketplace named `agilbertdev` that holds one plugin 
 
 A plugin is installed into a project and updated centrally, which is what makes it different from a project template. The starter files for a new project live in a separate template repository, one per stack, with the plugins already enabled in its Claude settings.
 
+## Try it
+
+Meant for anyone evaluating my work. It takes a scratch directory and about a minute, and it touches nothing else on your machine.
+
+```bash
+mkdir /tmp/try-agilbertdev && cd /tmp/try-agilbertdev && git init
+claude plugin marketplace add AGilbertDev/claude-plugins --scope project
+claude plugin install workflow@agilbertdev --scope project
+claude
+```
+
+Then ask for a feature, or type `/workflow:pipeline` to see the flow, `/workflow:spec` for the spec template, and `claude plugin details workflow@agilbertdev` for what it costs in context.
+
+Three things worth knowing before you run it.
+
+**Use project scope, as written above.** At user scope it would load my conventions into every repository on your machine, which is not what you want and is the one mistake I made myself.
+
+**Two hooks will act on your commits.** One blocks a command that reads or writes a secrets file. One runs the project's own test script before a `git commit` and blocks the commit when it fails, which is slow if the suite is slow. Both are in `plugins/workflow/hooks/` and both have tests. A third checks the git identity and will do nothing in your repositories, because it only acts when the origin remote is under my own account.
+
+**Only one plugin is general.** `workflow` carries the pipeline and is free of any stack. `nuxt-conventions` is my Nuxt setup down to the icon set, so install it only if you want to see how stack rules are separated from the process.
+
+Removing it again is two commands.
+
+```bash
+claude plugin uninstall workflow@agilbertdev --scope project
+claude plugin marketplace remove agilbertdev
+```
+
 ## Adding it to one of my projects
 
-These are my own notes. The repository is public so the method can be read, and the licence allows reading and nothing else. It is not a package on offer, and none of it is written to be useful to anybody else's setup.
+These are my own notes, kept here because the workflow only means something with its wiring shown. If you are evaluating rather than adopting, [Try it](#try-it) is the shorter path.
 
 Every project of mine already declares the marketplace and both plugins in a committed `.claude/settings.json`, so opening one is usually all it takes. **Do not accept the install prompt.** It defaults to user scope, which puts a personal workflow into every repository on the machine, including an employer's. Run the commands instead, with the scope spelled out.
 
@@ -69,4 +98,4 @@ Validate any change before pushing with `claude plugin validate .`.
 
 ## License
 
-All rights reserved. This code is published for viewing and reference only, and is not open source. See [LICENSE](./LICENSE).
+All rights reserved, with one narrow permission. Anyone may install and run it as published to evaluate my work. That covers running it and nothing else, so not adopting it in your own projects, not adapting it, and not redistributing it. See [LICENSE](./LICENSE).
