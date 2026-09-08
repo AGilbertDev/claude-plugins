@@ -1,7 +1,5 @@
 # claude-plugins
 
-The always-on core lives in `plugins/workflow/core.md` and loads through the workflow plugin. This file only imports it so the legacy `@.recipes/CLAUDE.md` path keeps working until every project has migrated.
+This repository is the marketplace. The always-on core it ships lives in `plugins/workflow/core.md` and reaches a session through the workflow plugin's session-start hook, not through an import.
 
-@plugins/workflow/core.md
-
-When editing this repo, run `claude plugin validate .` before pushing.
+Before pushing, run `claude plugin validate . --strict` and `bash plugins/workflow/hooks/tests/run.sh`. Both run in CI as well.

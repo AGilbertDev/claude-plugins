@@ -51,10 +51,6 @@ plugins/nuxt-conventions/             .claude-plugin/plugin.json, skills/, agent
 
 Validate any change before pushing with `claude plugin validate .`.
 
-## Migration status
-
-This repository used to be consumed as a `.recipes` git submodule with symlinks into `.claude/`. The plugin form replaces that. Until every project has migrated, the legacy path stays in place and keeps working, meaning `bin/install`, `settings.base.json`, `skills.manifest.json`, `templates/`, and the root `CLAUDE.md` import shim. They are removed once the last project moves over. Third-party skills are still fetched with the `skills` CLI as listed in `skills.manifest.json`, and the project template takes that job over.
-
 ## License
 
 All rights reserved. This code is published for viewing and reference only, and is not open source. See [LICENSE](./LICENSE).
