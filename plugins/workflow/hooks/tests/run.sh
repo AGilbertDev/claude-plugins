@@ -28,6 +28,15 @@ mkrepo() { # name test-script git-name
 mkrepo failing 'exit 1' AGilbertDev
 mkrepo passing 'echo ok' AGilbertDev
 mkrepo work    'echo ok' WorkAccount
+# One machine holds a personal and a work account. A repository under another
+# owner must pass through even when the identity is not the personal one, and a
+# personal repository must still be guarded.
+git -C "$TMP/work" remote add origin https://github.com/AGilbertDev/work.git
+mkrepo employer 'echo ok' WorkAccount
+git -C "$TMP/employer" remote add origin https://github.com/SomeEmployer/product.git
+mkrepo employer-ssh 'echo ok' WorkAccount
+git -C "$TMP/employer-ssh" remote add origin git@github.com:SomeEmployer/product.git
+mkrepo noremote 'echo ok' WorkAccount
 mkdir -p "$TMP/docs-only" && (cd "$TMP/docs-only" && git init -q && echo x > README.md && git add README.md)
 
 # ---- secrets guard ----
@@ -72,6 +81,9 @@ check 2 "work identity push"              "$(feed $g Bash command '"git push ori
 check 2 "work identity via -C"            "$(feed $g Bash command "\"git -C $TMP/work commit -m x\"")"
 check 0 "personal identity"               "$(feed $g Bash command '"git commit -m x"' "$TMP/passing")"
 check 0 "not git"                         "$(feed $g Bash command '"ls"' "$TMP/work")"
+check 0 "another owner over https"        "$(feed $g Bash command '"git commit -m x"' "$TMP/employer")"
+check 0 "another owner over ssh"          "$(feed $g Bash command '"git commit -m x"' "$TMP/employer-ssh")"
+check 0 "no remote at all"                "$(feed $g Bash command '"git commit -m x"' "$TMP/noremote")"
 
 echo "hooks: $pass passed, $fail failed"
 [ "$fail" = 0 ]

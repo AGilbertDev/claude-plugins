@@ -10,6 +10,7 @@ set -uo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/lib.sh"
 
 expected_name="${AGD_GIT_NAME:-AGilbertDev}"
+expected_owner="${AGD_GIT_OWNER:-$expected_name}"
 cmd="$(hook_field command)"
 [ -z "$cmd" ] && exit 0
 
@@ -19,6 +20,16 @@ fi
 
 dir="$(git_c_dir "$cmd")"
 [ -n "$dir" ] && cd "$dir" 2>/dev/null
+
+# Guard only what this hook can prove is mine, which is a repository whose
+# origin remote sits under my own account. Anything else passes through, including
+# a repository with no remote, because blocking a legitimate commit in somebody
+# else's repository costs far more than missing one of mine before its first push.
+remote="$(git config --get remote.origin.url 2>/dev/null || true)"
+[ -z "$remote" ] && exit 0
+owner="$(printf '%s' "$remote" \
+  | sed -E 's#^[a-z+]+://([^@]*@)?[^/]+/##; s#^[^@]+@[^:]+:##; s#/[^/]*$##; s#^.*/##')"
+[ "$owner" != "$expected_owner" ] && exit 0
 
 name="$(git config user.name 2>/dev/null || true)"
 
